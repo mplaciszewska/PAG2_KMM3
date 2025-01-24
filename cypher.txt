@@ -1,0 +1,162 @@
+=============Dijkstra_Time==================================================================================================================================
+
+CALL gds.graph.project(
+    'roadGraph_Dijkstra_Time',
+    'Node',
+    {
+      ROAD: {
+        orientation: 'NATURAL',
+        properties: {
+          time_seconds: {property: 'time_seconds'}
+        }
+      }
+    },
+    {
+      nodeProperties: ['longitude', 'latitude']
+    }
+  )
+ 
+ 
+MATCH (source:Node {id: '467402.0_591156.0'}),
+      (target:Node {id: '484734.0_580247.0'})
+CALL gds.shortestPath.dijkstra.stream('roadGraph_Dijkstra_Time', {
+    sourceNode: id(source),
+    targetNode: id(target),
+    relationshipWeightProperty: 'time_seconds'
+})
+YIELD index, sourceNode, targetNode, totalCost, nodeIds, costs, path
+RETURN
+    index,
+    gds.util.asNode(sourceNode).id AS sourceNodeName,
+    gds.util.asNode(targetNode).id AS targetNodeName,
+    totalCost,
+    size(nodeIds) AS visitedNodesCount,
+    [nodeId IN nodeIds | gds.util.asNode(nodeId).id] AS nodeNames,
+    costs,
+    nodes(path) AS path
+ORDER BY index;
+
+=============Dijkstra_Distance==============================================================================================================================
+
+
+CALL gds.graph.project(
+    'roadGraph_Dijkstra_Dist',
+    'Node',
+    {
+      ROAD: {
+        orientation: 'NATURAL',
+        properties: {
+          length: {property: 'length'}
+        }
+      }
+    },
+    {
+      nodeProperties: ['longitude', 'latitude']
+    }
+  )
+ 
+ 
+MATCH (source:Node {id: '467402.0_591156.0'}),
+      (target:Node {id: '484734.0_580247.0'})
+CALL gds.shortestPath.dijkstra.stream('roadGraph_Dijkstra_Dist', {
+    sourceNode: id(source),
+    targetNode: id(target),
+    relationshipWeightProperty: 'length'
+})
+YIELD index, sourceNode, targetNode, totalCost, nodeIds, costs, path
+RETURN
+    index,
+    gds.util.asNode(sourceNode).id AS sourceNodeName,
+    gds.util.asNode(targetNode).id AS targetNodeName,
+    totalCost,
+    size(nodeIds) AS visitedNodesCount,
+    [nodeId IN nodeIds | gds.util.asNode(nodeId).id] AS nodeNames,
+    costs,
+    nodes(path) AS path
+ORDER BY index;
+
+=============A*_Distance====================================================================================================================================
+
+CALL gds.graph.project(
+    'roadGraph_A*_Distance',
+    'Node',
+    {
+      ROAD: {
+        orientation: 'NATURAL',
+        properties: {
+          length: {property: 'length'}
+        }
+      }
+    },
+    {
+      nodeProperties: ['longitude', 'latitude']
+    }
+)
+
+
+MATCH (source:Node {id: '467402.0_591156.0'}),
+      (target:Node {id: '484734.0_580247.0'})
+CALL gds.shortestPath.astar.stream('roadGraph_A*_Distance', {
+    sourceNode: id(source),
+    targetNode: id(target),
+    relationshipWeightProperty: 'length',  
+    latitudeProperty: 'latitude',
+    longitudeProperty: 'longitude'
+})
+YIELD index, sourceNode, targetNode, totalCost, nodeIds, costs, path
+RETURN
+    index,
+    gds.util.asNode(sourceNode).id AS sourceNodeName,
+    gds.util.asNode(targetNode).id AS targetNodeName,
+    totalCost,
+    size(nodeIds) AS visitedNodesCount,
+    [nodeId IN nodeIds | gds.util.asNode(nodeId).id] AS nodeNames,
+    costs,
+    nodes(path) AS path
+ORDER BY index;
+
+
+
+=============A*_Time =======================================================================================================================================
+
+
+CALL gds.graph.project(
+    'roadGraph_A*_Time',
+    'Node',
+    {
+      ROAD: {
+        orientation: 'NATURAL',
+        properties: {
+          time_seconds: {property: 'time_seconds'}
+        }
+      }
+    },
+    {
+      nodeProperties: ['longitude', 'latitude']
+    }
+)
+ 
+MATCH (source:Node {id: '467402.0_591156.0'}),
+      (target:Node {id: '484734.0_580247.0'})
+CALL gds.shortestPath.astar.stream('roadGraph_A*_Time', {
+    sourceNode: id(source),
+    targetNode: id(target),
+    relationshipWeightProperty: 'time_seconds',
+    latitudeProperty: 'latitude',   
+    longitudeProperty: 'longitude'
+})
+YIELD index, sourceNode, targetNode, totalCost, nodeIds, costs, path
+RETURN
+    index,
+    gds.util.asNode(sourceNode).id AS sourceNodeName,
+    gds.util.asNode(targetNode).id AS targetNodeName,
+    totalCost,
+    size(nodeIds) AS visitedNodesCount,
+    [nodeId IN nodeIds | gds.util.asNode(nodeId).id] AS nodeNames,
+    costs,
+    nodes(path) AS path
+ORDER BY index;
+
+
+
+
