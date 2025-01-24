@@ -1,7 +1,10 @@
+# Wykorzystanie grafowej bazy danych do szukania najlepszej ścieżki 
+
+
 ## TWÓRCY
-Karolina Pawlak
-Maja Płaciszewska
-Maja Kret
+- Karolina Pawlak
+- Maja Płaciszewska
+- Maja Kret
 
 
 ## OPIS PROGRAMU 
