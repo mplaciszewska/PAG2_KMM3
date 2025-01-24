@@ -22,9 +22,9 @@ nodes = set(gdf['start_point']).union(set(gdf['end_point']))
 # Tworzenie listy krawędzi z atrybutami
 edges = gdf[['start_point', 'end_point', 'klasaDrogi', 'kierunek', 'Shape_Leng']]
 
-uri = "bolt://localhost:7687"
+uri = "localhost"
 username = "neo4j"
-password = "Baza1234"
+password = "password"
 database_name = "neo4j"
 
 driver = GraphDatabase.driver(uri, auth=(username, password))
